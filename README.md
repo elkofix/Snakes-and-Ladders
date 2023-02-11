@@ -1,5 +1,5 @@
 # Snakes-and-Ladders
-## Integrantres
+## Members
 - Alejandro Cordoba- Project Manager
 - Santiago Castillo - Developer
 - Miguel Angel Martinez - Designer
