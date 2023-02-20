@@ -2,4 +2,4 @@
 ## Members
 - Alejandro Cordoba- Project Manager
 - Santiago Castillo - Developer
-- Miguel Angel Martinez - Designer
+- Miguel Angel Martinez - Technical Writer
