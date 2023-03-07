@@ -12,7 +12,7 @@ public class Main{
 
     public static void startMenu(){
 
-            System.out.println("\n Bienvenido al juego  y Serpientes... \n\n Seleccione una opcion: \n [1] Jugar \n [2] Salir");
+            System.out.println("\n Bienvenido al juego Escaleras y Serpientes... \n\n Seleccione una opcion: \n [1] Jugar \n [2] Salir");
             
             if(sc.nextInt() == 1){
 
