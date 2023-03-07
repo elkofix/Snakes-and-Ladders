@@ -4,27 +4,8 @@ public class LinkedList {
     private Box head;
     private Box tail;
 
-    private LinkedList previous;
-    
-    public LinkedList getPrevious() {
-        return previous;
-    }
-
-    public void setPrevious(LinkedList previous) {
-        this.previous = previous;
-    }
-
-    private LinkedList next;
-
-    public LinkedList getNext() {
-        return next;
-    }
-
-    public void setNext(LinkedList next) {
-        this.next = next;
-    }
-
-    public void addNode(Box node){
+    public void addNode(int value){
+        Box node = new Box(value);
         if(head==null){
             head = node;
             tail = node;
