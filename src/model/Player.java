@@ -7,9 +7,9 @@ public class Player {
     private Box current_box;
 
     
-    public Player(String id, Box current_box) {
+    public Player(String id) {
         this.id = id;
-        this.current_box = current_box;
+        this.current_box = null;
     }
 
     public Box getCurrent_box() {

@@ -1,12 +1,12 @@
 package model;
 
-public class Node {
+public class Box {
 
     private int value;
-    private Node next;
-    private Node previous;
+    private Box next;
+    private Box previous;
 
-    public Node(int value) {
+    public Box(int value) {
         this.value = value;
     }
 
@@ -18,19 +18,19 @@ public class Node {
         this.value = value;
     }
 
-    public Node getNext() {
+    public Box getNext() {
         return next;
     }
 
-    public void setNext(Node next) {
+    public void setNext(Box next) {
         this.next = next;
     }
 
-    public Node getPrevious() {
+    public Box getPrevious() {
         return previous;
     }
 
-    public void setPrevious(Node previous) {
+    public void setPrevious(Box previous) {
         this.previous = previous;
     }
 }
