@@ -29,15 +29,14 @@ public class Main{
                 System.out.println("\n Digite el numero de columnas del tablero: ");
                 int cols = sc.nextInt();
 
-                System.out.println(control.generateTable(rows*cols));
+                System.out.println(control.generateTable(rows*cols, rows, cols));
 
                 System.out.println("\n Digite el numero de serpientes: ");
                 int snakes = sc.nextInt();
 
                 System.out.println("\n Digite el numero de escaleras: ");
                 int stairs = sc.nextInt();
-
-                
+                System.out.println(control.addSnakenLadders(snakes, stairs));
                 startMenu();
             }
             

@@ -3,6 +3,34 @@ package model;
 public class LinkedList {
     private Box head;
     private Box tail;
+    private int size;
+    private int rows;
+    private int columns;
+
+    public int getColumns() {
+        return columns;
+    }
+
+    
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
+
+    public void setColumns(int columns) {
+        this.columns = columns;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
 
     public void addNode(int value){
         Box node = new Box(value);
@@ -15,6 +43,32 @@ public class LinkedList {
             tail = node;
         }
     }
+
+    
+	public Box search(int goal){
+		return search(goal, this.head); 
+	}
+
+	private Box search(int goal, Box current){
+		// Caso base 
+		if(current == null){
+			return null; 
+		}
+
+		// caso borde 
+		if(goal == head.getValue() && current.equals(this.head)){
+			return this.head; 
+		}
+
+		if(goal == tail.getValue() && current.equals(this.tail)){
+			return this.tail; 
+		}
+		if(goal == current.getValue()){
+			return current; 
+		}
+
+		return search(goal, current.getNext()); 
+	}
 
     public void addFirst(Box node){
 
