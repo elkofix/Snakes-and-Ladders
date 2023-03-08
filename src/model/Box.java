@@ -64,4 +64,9 @@ public class Box {
     public void setPrevious(Box previous) {
         this.previous = previous;
     }
+
+    @Override
+    public String toString(){
+        return " [ "+ value+" ]";
+    }
 }

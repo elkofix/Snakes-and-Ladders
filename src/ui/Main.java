@@ -37,6 +37,7 @@ public class Main{
                 System.out.println("\n Digite el numero de escaleras: ");
                 int stairs = sc.nextInt();
                 System.out.println(control.addSnakenLadders(snakes, stairs));
+                System.out.println(control.printBoard());
                 startMenu();
             }
             

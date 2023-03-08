@@ -22,7 +22,7 @@ public class Controller {
    public String generateTable(int size, int rows, int colum){
       board.setColumns(colum);
       board.setSize(size);
-      board.setSize(size);
+      board.setRows(rows);
       return generateTable(size, 1);
    }
 
@@ -66,8 +66,6 @@ public class Controller {
                boxStart.setSnake(true);
                boxEnd.setSnake(true);
                return adddSnakenLadders(--snk, ladd);
-            }else{
-               return adddSnakenLadders(snk, ladd);
             }
          }
       }
@@ -88,5 +86,13 @@ public class Controller {
          }
       }
       return adddSnakenLadders(snk, ladd);
+   }
+
+   public String printBoard(){
+      if(board.getRows()%2==0){
+         return board.printBoard();
+      }else{
+         return board.printBoardOdd();
+      }
    }
 }

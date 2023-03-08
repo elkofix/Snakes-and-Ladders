@@ -2,7 +2,6 @@ package model;
 
 public class Player {
     private String id;
-
     //Establecer como base la primera casilla
     private Box current_box;
 
