@@ -1,13 +1,12 @@
 package model;
 import java.lang.Math;
 
-import javax.print.attribute.standard.Sides;
-
 public class Controller {
    private Player player_1;
    private Player player_2;
    private Player player_3;
    private LinkedList board;
+   private String playerLists;
    private LinkedList copy;
 
    public LinkedList getBoard() {
@@ -22,6 +21,7 @@ public class Controller {
    public Controller(){
       this.board = new LinkedList();
       this.copy = new LinkedList();
+      this.playerLists = "*!OX%$#+&";
    }
 
    public String generateTable(int size, int rows, int colum){
@@ -135,5 +135,78 @@ public class Controller {
       }else{
          return board.printBoardOdd();
       }
+   }
+
+   public String printPlayersList(){
+      return printPlayersList(0, playerLists, "");
+   }
+
+  public String printPlayersList(int counter, String list, String msj){
+      if(counter==list.length()-1){
+          return msj;
+      }
+      msj+=counter+1+". "+list.charAt(counter)+"\n";
+      return printPlayersList(++counter, list, msj);
+      
+  }
+
+  public String updatePlayer1(int character){
+      if(character<this.playerLists.length()){
+         String charac = playerLists.charAt(character-1)+"";
+         this.player_1 = new Player(charac);
+         int len = this.playerLists.length();
+         this.playerLists = this.playerLists.replace(charac, "");
+         int len2 = this.playerLists.length();
+         if(len-len2==1){
+            return "Personaje seleccionado";
+         }else{
+            return "No se selecciono el personaje";
+         }
+      }else{
+         return "Opcion invalida";
+      }
+  }
+
+  public String updatePlayer2(int character){
+      if(character<this.playerLists.length()){
+         String charac = playerLists.charAt(character-1)+"";
+         this.player_2 = new Player(charac);
+         int len = this.playerLists.length();
+         this.playerLists = this.playerLists.replace(charac, "");
+         int len2 = this.playerLists.length();
+         if(len-len2==1){
+            return "Personaje seleccionado";
+         }else{
+            return "No se selecciono el personaje";
+         }
+      }else{
+         return "Opcion invalida";
+      }
+   }
+
+   public String updatePlayer3(int character){
+      if(character<this.playerLists.length()){
+         String charac = playerLists.charAt(character-1)+"";
+         this.player_3 = new Player(charac);
+         int len = this.playerLists.length();
+         this.playerLists = this.playerLists.replace(charac, "");
+         int len2 = this.playerLists.length();
+         if(len-len2==1){
+            return "Personaje seleccionado";
+         }else{
+            return "No se selecciono el personaje";
+         }
+      }else{
+         return "Opcion invalida";
+      }
+   }
+
+   public void addPlayers(){
+      board.addPlayers(player_1.getId());
+      player_1.setCurrent_box(board.getHead());
+      board.addPlayers(player_3.getId());
+      player_2.setCurrent_box(board.getHead());
+      board.addPlayers(player_2.getId());
+      player_3.setCurrent_box(board.getHead());
    }
 }

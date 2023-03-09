@@ -7,6 +7,15 @@ public class Box {
     private Box previous;
     private Box pointer;
     private boolean snake;
+    private String players;
+    public String getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(String players) {
+        this.players = players;
+    }
+
     public boolean isSnake() {
         return snake;
     }
@@ -16,7 +25,6 @@ public class Box {
     }
 
     private boolean ladder;
-    
 
     public boolean isLadder() {
         return ladder;
@@ -41,6 +49,7 @@ public class Box {
         this.value = value;
         this.ladder = false;
         this.snake = false;
+        this.players = "";
     }
 
     public int getValue() {
@@ -63,19 +72,47 @@ public class Box {
         return previous;
     }
 
+    public void deletePlayer(String player){
+        players = players.replaceAll(player, "");
+    }
+
+    public void addPlayers(String player){
+        players+=player;
+    }
+
     public void setPrevious(Box previous) {
         this.previous = previous;
     }
 
     @Override
     public String toString(){
-        if(value>=10){
-            return "  ["+ value+"] ";
+        if(!players.equals("")){
+            
+            if(value>=10){
+                String box = "["+ value+players+"]   ";
+                return "  "+recalculateSpaces(players.length(), box);
+            }
+            String box = "["+ value+players+"]    ";
+            return "  "+recalculateSpaces(players.length(), box);
+        }else{
+            if(value>=10){
+                return "  ["+ value+"]   ";
+            }
+            return "  ["+ value+"]    "; 
         }
-        return "  ["+ value+"]  ";
     }
 
     public String toString2(){
         return "  ["+ snake+"]  ";
     }
+
+    public String recalculateSpaces(int players, String box){
+        if(players==0){
+            return box;
+        }        
+        box = box.replaceFirst(" ", "");
+        return recalculateSpaces(--players, box);
+    }
+
+    
 }

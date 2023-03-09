@@ -2,6 +2,10 @@ package model;
 
 public class LinkedList {
     private Box head;
+    public Box getHead() {
+        return head;
+    }
+
     private Box tail;
     private int size;
     private int rows;
@@ -11,6 +15,9 @@ public class LinkedList {
         return columns;
     }
 
+    public void addPlayers(String player){
+        head.addPlayers(player);
+    }
     
     public int getRows() {
         return rows;
