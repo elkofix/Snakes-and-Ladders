@@ -69,10 +69,13 @@ public class Box {
 
     @Override
     public String toString(){
-        return " [ "+ value+" ]";
+        if(value>=10){
+            return "  ["+ value+"] ";
+        }
+        return "  ["+ value+"]  ";
     }
 
     public String toString2(){
-        return " [ "+ snake+" ]";
+        return "  ["+ snake+"]  ";
     }
 }
