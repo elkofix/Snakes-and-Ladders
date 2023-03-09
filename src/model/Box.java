@@ -39,6 +39,8 @@ public class Box {
 
     public Box(int value) {
         this.value = value;
+        this.ladder = false;
+        this.snake = false;
     }
 
     public int getValue() {
@@ -68,5 +70,9 @@ public class Box {
     @Override
     public String toString(){
         return " [ "+ value+" ]";
+    }
+
+    public String toString2(){
+        return " [ "+ snake+" ]";
     }
 }

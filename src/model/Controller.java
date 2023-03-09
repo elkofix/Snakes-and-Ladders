@@ -1,11 +1,14 @@
 package model;
 import java.lang.Math;
 
+import javax.print.attribute.standard.Sides;
+
 public class Controller {
    private Player player_1;
    private Player player_2;
    private Player player_3;
    private LinkedList board;
+   private LinkedList copy;
 
    public LinkedList getBoard() {
       return board;
@@ -15,8 +18,10 @@ public class Controller {
       this.board = board;
    }
 
+
    public Controller(){
       this.board = new LinkedList();
+      this.copy = new LinkedList();
    }
 
    public String generateTable(int size, int rows, int colum){
@@ -37,55 +42,91 @@ public class Controller {
       return generateTable(size, ++counter);
    }
 
+   public String generateTable1(int size, int rows, int colum){
+      copy.setColumns(colum);
+      copy.setSize(size);
+      copy.setRows(rows);
+      return generateTable1(size, 1);
+   }
+
+   private String generateTable1(int size, int counter){
+      if(counter >= size+1){
+         return "Se ha generado el tablero";
+      }
+      if(size<6){
+         return "El tamaño del tablero debe ser de almenos 2*3";
+      }
+      copy.addNode(counter);
+      return generateTable1(size, ++counter);
+   }
+
    public String addSnakenLadders(int snk, int ladd){
       if(snk==0 || ladd==0){
          return "Las escarleras y serpientes deben ser mayores a 0";
       }
-      if(snk+ladd > (board.getSize()-2)/2){
-         return "El tablero no puede tener tantas escaleras y serpientes";
-      }
-      return adddSnakenLadders(snk, ladd);
+
+      this.copy.delete(1);
+      this.copy.delete(board.getSize());
+      this.copy.decreaseSize();
+      return adddSnakenLadders(snk, ladd, this.copy);
    }
 
-   private String adddSnakenLadders(int snk, int ladd){
+   private String adddSnakenLadders(int snk, int ladd, LinkedList copy){
       if(snk==0 && ladd==0){
          return "Se han agregado las serpientes y escaleras";
       }
 
       if(snk != 0){
-         int boxstart = ((int)(Math.random()* (board.getSize() - 2 + 1) + 2));
-         int boxsend = ((int)(Math.random()* (board.getSize() - 2 + 1) + 2));
-         int row = (int)(Math.ceil(boxstart/board.getColumns()));
-         int endColumn = row*board.getColumns();
-         int startColumn = (endColumn - board.getColumns())+1;
-         if(boxsend<startColumn && endColumn != 1){
-            Box boxStart = board.search(boxstart);
-            Box boxEnd = board.search(boxsend);
+         int boxstart = (int)((Math.random()* (copy.getSize()))); 
+         Box boxStart = copy.searchIndex(boxstart);
+         int boxsend = (int)((Math.random()* (copy.getSize())));
+         Box boxEnd = copy.searchIndex(boxsend);
+         double boxi = (double)(boxStart.getValue());
+         Double x = (boxi/board.getColumns());
+         Double row = Math.ceil(x);
+         Double endColumn = row*board.getColumns();
+         Double startColumn = (endColumn - board.getColumns())+1;
+
+         if(boxEnd.getValue()<startColumn){
             if(!boxStart.isSnake() && !boxEnd.isSnake() && !boxStart.isLadder() && !boxEnd.isLadder()){
+               boxStart = board.search(boxStart.getValue());
+               boxEnd = board.search(boxEnd.getValue());
                boxStart.setPointer(boxEnd);
                boxStart.setSnake(true);
                boxEnd.setSnake(true);
-               return adddSnakenLadders(--snk, ladd);
+               copy.delete(boxStart.getValue());
+               copy.delete(boxEnd.getValue());
+               copy.decreaseSize();
+               return adddSnakenLadders(--snk, ladd, copy);
             }
          }
       }
+
       if(ladd != 0){
-         int boxstart = ((int)(Math.random()* (board.getSize() - 2 + 1) + 2));
-         int boxsend = ((int)(Math.random()* (board.getSize() - 2 + 1) + 2));
-         int row = (int)(Math.ceil(boxstart/board.getColumns()));
-         int endColumn = row*board.getColumns();
-         if(boxsend>endColumn && endColumn != board.getSize()){
-            Box boxStart = board.search(boxstart);
-            Box boxEnd = board.search(boxsend);
+         int boxstart = (int)((Math.random()* (copy.getSize()))); 
+         Box boxStart = copy.searchIndex(boxstart);
+         int boxsend = (int)((Math.random()* (copy.getSize())));
+         Box boxEnd = copy.searchIndex(boxsend);
+         double boxi = (double)(boxStart.getValue());
+         Double x = (boxi/board.getColumns());
+         Double row = Math.ceil(x);
+         Double endColumn = row*board.getColumns();
+
+         if(boxEnd.getValue()>endColumn){
             if(!boxStart.isSnake() && !boxEnd.isSnake() && !boxStart.isLadder() && !boxEnd.isLadder()){
+               boxStart = board.search(boxStart.getValue());
+               boxEnd = board.search(boxEnd.getValue());
                boxStart.setPointer(boxEnd);
                boxStart.setLadder(true);
                boxEnd.setLadder(true);
-               return adddSnakenLadders(snk, --ladd);
+               copy.delete(boxStart.getValue());
+               copy.delete(boxEnd.getValue());
+               copy.decreaseSize();
+               return adddSnakenLadders(snk, --ladd, copy);
             }
          }
       }
-      return adddSnakenLadders(snk, ladd);
+      return adddSnakenLadders(snk, ladd, copy);
    }
 
    public String printBoard(){

@@ -30,6 +30,7 @@ public class Main{
                 int cols = sc.nextInt();
 
                 System.out.println(control.generateTable(rows*cols, rows, cols));
+                control.generateTable1(rows*cols, rows, cols);
 
                 System.out.println("\n Digite el numero de serpientes: ");
                 int snakes = sc.nextInt();

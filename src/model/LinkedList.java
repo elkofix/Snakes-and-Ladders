@@ -70,6 +70,19 @@ public class LinkedList {
 		return search(goal, current.getNext()); 
 	}
 
+    public Box searchIndex(int index){
+		return search(index, this.head, 0); 
+	}
+
+	private Box search(int index, Box current, int counter){
+		// Caso base 
+		if(index==counter){
+            return current;
+        }
+
+		return search(index, current.getNext(), ++counter); 
+	}
+
     public void addFirst(Box node){
 
         if(head==null){
@@ -82,7 +95,6 @@ public class LinkedList {
         }
         
     }
-
     //Activacion
     public String printBoard(){
         return printBoard(tail, "");
@@ -97,8 +109,6 @@ public class LinkedList {
         if(current == null ){
             return msj;
         }
-
-        System.out.println(head.getPrevious());
         if((current.getValue()+columns-1)%columns!=0){
             msj += current.toString();
             
@@ -178,6 +188,10 @@ public class LinkedList {
             return;
         }
         if(current.getValue() == goal){
+            if(current == head && current.getNext()==null){
+                this.head=null;
+                return;
+            }
             if(current == head){
                 Box next = head.getNext();
                 next.setPrevious(null);
@@ -199,6 +213,10 @@ public class LinkedList {
         }
         delete(current.getNext(), goal);
 
+    }
+
+    public void decreaseSize(){
+        this.size-=2;
     }
 
 }
