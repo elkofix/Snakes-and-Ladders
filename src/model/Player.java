@@ -1,43 +1,30 @@
 package model;
 
 public class Player {
-    private String name;
-    private int score;
+    private String id;
+    //Establecer como base la primera casilla
+    private Box current_box;
 
-    public Player(String name) {
-        this.name = name;
-        this.score = 0;
+    
+    public Player(String id) {
+        this.id = id;
+        this.current_box = null;
     }
 
-    public String getName() {
-        return name;
+    public Box getCurrent_box() {
+        return current_box;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCurrent_box(Box current_box) {
+        this.current_box = current_box;
     }
 
-    public int getScore() {
-        return score;
+
+    public String getId() {
+        return id;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public void increaseScore(int points) {
-        this.score += points;
-    }
-
-    public void resetScore() {
-        this.score = 0;
-    }
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "name='" + name + '\'' +
-                ", score=" + score +
-                '}';
+    public void setId(String id) {
+        this.id = id;
     }
 }
