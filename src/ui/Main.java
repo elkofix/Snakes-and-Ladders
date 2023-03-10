@@ -35,11 +35,6 @@ public class Main{
         } 
     }
 
-    public void printPlayersList(String list){
-        printPlayersList(0, list);
-
-    }
-
     public void generateTable(){
         System.out.println("\n Digite el numero de filas del tablero: ");
         int rows = sc.nextInt();
@@ -60,26 +55,24 @@ public class Main{
     }
 
     public void selectPlayers(){
+        String figures = "";
         System.out.println("Escoja un simbolo para el primer jugador:");
         System.out.println(control.printPlayersList());
-        int character = sc.nextInt();
-        System.out.println(control.updatePlayer1(character));    
+        int character = sc.nextInt();  
+        figures += control.getFigure(character);
         System.out.println("Escoja un simbolo para el segundo jugador:");
         System.out.println(control.printPlayersList());
         character = sc.nextInt();
-        System.out.println(control.updatePlayer2(character));    
+        figures += control.getFigure(character);
         System.out.println("Escoja un simbolo para el tercer jugador:");
         System.out.println(control.printPlayersList());
         character = sc.nextInt();
-        System.out.println(control.updatePlayer3(character)); 
-        control.addPlayers();   
+        figures += control.getFigure(character);
+        control.updatePlayers(figures);   
+        control.asingPosition(figures);
     }
 
-    public void printPlayersList(int counter, String list){
-        if(counter==list.length()-1){
-            return;
-        }
-        System.out.println(counter+1+". "+list.charAt(counter));
-        printPlayersList(++counter, list);
+    public void generateTurns(){
+        
     }
 }

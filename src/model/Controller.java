@@ -2,12 +2,19 @@ package model;
 import java.lang.Math;
 
 public class Controller {
-   private Player player_1;
-   private Player player_2;
-   private Player player_3;
+   private CircularLinkedList players;
    private LinkedList board;
    private String playerLists;
    private LinkedList copy;
+   private String turns;
+
+   public String getTurns() {
+      return turns;
+   }
+
+   public void setTurns(String turns) {
+      this.turns = turns;
+   }
 
    public LinkedList getBoard() {
       return board;
@@ -21,9 +28,10 @@ public class Controller {
    public Controller(){
       this.board = new LinkedList();
       this.copy = new LinkedList();
-      this.playerLists = "*!OX%$#+&";
+      this.playerLists = "!OX%$#+&";
+      this.players = new CircularLinkedList();
    }
-
+   //Este metodo genera el numero de las casillas pedidas
    public String generateTable(int size, int rows, int colum){
       board.setColumns(colum);
       board.setSize(size);
@@ -41,7 +49,7 @@ public class Controller {
       board.addNode(counter);
       return generateTable(size, ++counter);
    }
-
+    //Este metodo genera otra tabla con el numero de las casillas pedidas para generar las serpientes y escaleras
    public String generateTable1(int size, int rows, int colum){
       copy.setColumns(colum);
       copy.setSize(size);
@@ -59,7 +67,8 @@ public class Controller {
       copy.addNode(counter);
       return generateTable1(size, ++counter);
    }
-
+   //Este metod genera las serpientes y escaleras segun la copia del tablero, y va borrando las casillas que ya estan ocupadas
+   //Para que asi no se desborde la memoria
    public String addSnakenLadders(int snk, int ladd){
       if(snk==0 || ladd==0){
          return "Las escarleras y serpientes deben ser mayores a 0";
@@ -128,7 +137,7 @@ public class Controller {
       }
       return adddSnakenLadders(snk, ladd, copy);
    }
-
+   //Este metodo imprime el tablero dependiendo si las filas son impares o impares
    public String printBoard(){
       if(board.getRows()%2==0){
          return board.printBoard();
@@ -136,77 +145,41 @@ public class Controller {
          return board.printBoardOdd();
       }
    }
-
+   //Este metodo imprime la lista de opciones de signos para usar como jugadore
    public String printPlayersList(){
-      return printPlayersList(0, playerLists, "");
+      return printPlayersList(0, "");
    }
 
-  public String printPlayersList(int counter, String list, String msj){
-      if(counter==list.length()-1){
+  public String printPlayersList(int counter, String msj){
+      if(counter==playerLists.length()-1){
           return msj;
       }
-      msj+=counter+1+". "+list.charAt(counter)+"\n";
-      return printPlayersList(++counter, list, msj);
+      msj+=(counter+1)+". "+this.playerLists.charAt(counter)+"\n";
+      return printPlayersList(++counter, msj);
       
   }
-
-  public String updatePlayer1(int character){
-      if(character<this.playerLists.length()){
-         String charac = playerLists.charAt(character-1)+"";
-         this.player_1 = new Player(charac);
-         int len = this.playerLists.length();
-         this.playerLists = this.playerLists.replace(charac, "");
-         int len2 = this.playerLists.length();
-         if(len-len2==1){
-            return "Personaje seleccionado";
-         }else{
-            return "No se selecciono el personaje";
-         }
-      }else{
-         return "Opcion invalida";
-      }
+  //Este metodo agrega los jugadores a la lista de jugadores
+  public String updatePlayers(String character){
+      return updatePlayers(character, 0);
   }
 
-  public String updatePlayer2(int character){
-      if(character<this.playerLists.length()){
-         String charac = playerLists.charAt(character-1)+"";
-         this.player_2 = new Player(charac);
-         int len = this.playerLists.length();
-         this.playerLists = this.playerLists.replace(charac, "");
-         int len2 = this.playerLists.length();
-         if(len-len2==1){
-            return "Personaje seleccionado";
-         }else{
-            return "No se selecciono el personaje";
-         }
-      }else{
-         return "Opcion invalida";
+  public String updatePlayers(String character, int counter){
+      if(character.length()==counter+1){
+         return "Se agregaron los jugadores";
       }
+      Player player = new Player(character.charAt(counter)+"");
+      player.setCurrent_box(board.getHead());
+      players.addLast(player);
+      return updatePlayers(character, ++counter);
    }
+   //Este metodo recibe la figura que escogieron pa un jugador y la borra para que no la puedan escoger mas
+   public String getFigure(int pos){
+      String chars = this.playerLists.charAt(pos-1)+"";
+      this.playerLists = this.playerLists.replaceFirst(chars, "");
+		return chars;
+	}
 
-   public String updatePlayer3(int character){
-      if(character<this.playerLists.length()){
-         String charac = playerLists.charAt(character-1)+"";
-         this.player_3 = new Player(charac);
-         int len = this.playerLists.length();
-         this.playerLists = this.playerLists.replace(charac, "");
-         int len2 = this.playerLists.length();
-         if(len-len2==1){
-            return "Personaje seleccionado";
-         }else{
-            return "No se selecciono el personaje";
-         }
-      }else{
-         return "Opcion invalida";
-      }
-   }
-
-   public void addPlayers(){
-      board.addPlayers(player_1.getId());
-      player_1.setCurrent_box(board.getHead());
-      board.addPlayers(player_3.getId());
-      player_2.setCurrent_box(board.getHead());
-      board.addPlayers(player_2.getId());
-      player_3.setCurrent_box(board.getHead());
+   public void asingPosition(String c){
+      board.getHead().setPlayers(c);
    }
 }

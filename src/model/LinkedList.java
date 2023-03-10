@@ -38,7 +38,7 @@ public class LinkedList {
     public void setSize(int size) {
         this.size = size;
     }
-
+    //Este metodo agrega una casilla
     public void addNode(int value){
         Box node = new Box(value);
         if(head==null){
@@ -76,7 +76,9 @@ public class LinkedList {
 
 		return search(goal, current.getNext()); 
 	}
-
+    //Este metodo busca una casilla por index y no por valor
+    //Esto se usa para la copia, porque los valores se van borrando
+    //Entonces se busca en funcion del tamaño de la lista
     public Box searchIndex(int index){
 		return search(index, this.head, 0); 
 	}
@@ -102,13 +104,9 @@ public class LinkedList {
         }
         
     }
-    //Activacion
+    //Activacion. Este metodo imprime el table cuando las filas son pares
     public String printBoard(){
         return printBoard(tail, "");
-    }
-
-    public String printBoardOdd(){
-        return printBoardOdd(tail, "");
     }
 
     //Recursivo
@@ -143,6 +141,11 @@ public class LinkedList {
         }
 
         return printReverse(current.getNext(), goal, msj);
+    }
+
+    //Activacion. Este metodo imprime el table cuando las filas son impares
+    public String printBoardOdd(){
+        return printBoardOdd(tail, "");
     }
 
     private String printBoardOdd(Box current, String msj){
