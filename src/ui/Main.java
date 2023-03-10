@@ -2,6 +2,8 @@ package ui;
 
 import java.util.Scanner;
 
+import model.Game;
+
 public class Main{
 
     private static Scanner sc = new Scanner(System.in);
@@ -22,12 +24,13 @@ public class Main{
                 System.out.println("\n Digite el numero de columnas del tablero: ");
                 int cols = sc.nextInt();
 
-                System.out.println("\n Digite el numero de serpientes: ");
+                /*System.out.println("\n Digite el numero de serpientes: ");
                 int snakes = sc.nextInt();
 
                 System.out.println("\n Digite el numero de escaleras: ");
-                int stairs = sc.nextInt();
+                int stairs = sc.nextInt();*/
 
+                Game game = new Game(rows, cols);
                 
                 startMenu();
             }

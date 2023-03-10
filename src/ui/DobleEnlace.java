@@ -1,30 +1,8 @@
-package model;
+public class DobleEnlace {
+    private Node head;
+    private Node tail;
 
-public class LinkedList {
-    private Box head;
-    private Box tail;
-
-    private LinkedList previous;
-    
-    public LinkedList getPrevious() {
-        return previous;
-    }
-
-    public void setPrevious(LinkedList previous) {
-        this.previous = previous;
-    }
-
-    private LinkedList next;
-
-    public LinkedList getNext() {
-        return next;
-    }
-
-    public void setNext(LinkedList next) {
-        this.next = next;
-    }
-
-    public void addNode(Box node){
+    public void addNode(Node node){
         if(head==null){
             head = node;
             tail = node;
@@ -35,8 +13,7 @@ public class LinkedList {
         }
     }
 
-    public void addFirst(Box node){
-
+    public void addFirst(Node node){
         if(head==null){
             head = node;
             tail = node;
@@ -45,7 +22,6 @@ public class LinkedList {
             head.setPrevious(node);
             head = node;
         }
-        
     }
 
     //Activacion
@@ -54,38 +30,38 @@ public class LinkedList {
     }
 
     //Recursivo
-    private void print(Box current){
+    private void print(Node current){
         if(current == null){
             return;
         }
-        System.out.println(current.getValue());
+        System.out.println(current.getName());
         print(current.getNext());
     }
 
     //Eliminacion
-    public void delete(int goal){
+    public void delete(String goal){
         delete(head, goal);
     }
-    private void delete(Box current, int goal){
+    private void delete(Node current, String goal){
         if(current == null){
             return;
         }
-        if(current.getValue() == goal){
+        if(current.getName().equals(goal)){
             if(current == head){
-                Box next = head.getNext();
+                Node next = head.getNext();
                 next.setPrevious(null);
                 head = next;
                 return;
             }
             if(current == tail){
-                Box prev = tail.getPrevious();
+                Node prev = tail.getPrevious();
                 prev.setNext(null);
                 tail = prev;
                 return;
             }
             //Eliminar
-            Box prev = current.getPrevious();
-            Box next = current.getNext();
+            Node prev = current.getPrevious();
+            Node next = current.getNext();
             prev.setNext(next);
             next.setPrevious(prev);
             return;
@@ -93,5 +69,8 @@ public class LinkedList {
         delete(current.getNext(), goal);
 
     }
+
+
+
 
 }
