@@ -5,6 +5,7 @@ public class Box {
     private int value;
     private Box next;
     private Box previous;
+    //Este atributo es la caja a la que apunta otra, por ejemplos si este fuera la casilla 2, y es una escalera, este apuntaria al 7
     private Box pointer;
     private boolean snake;
     private String players;
@@ -83,7 +84,7 @@ public class Box {
     public void setPrevious(Box previous) {
         this.previous = previous;
     }
-
+    //Este metodo imprime una casilla, y calcula los espacios necesarios para que contenga jugadores y no corra las demas casillas
     @Override
     public String toString(){
         if(!players.equals("")){
