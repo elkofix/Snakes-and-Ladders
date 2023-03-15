@@ -24,7 +24,7 @@ public class Main{
             generateTable();
             generateSnakeNLadders();
             selectPlayers();
-            System.out.println(control.printBoard());
+            takeTurn();
         }else{
             if(option==0){
                 System.out.println("Salida del programa");
@@ -33,11 +33,6 @@ public class Main{
                 startMenu();
             }
         } 
-    }
-
-    public void printPlayersList(String list){
-        printPlayersList(0, list);
-
     }
 
     public void generateTable(){
@@ -60,26 +55,39 @@ public class Main{
     }
 
     public void selectPlayers(){
+        String figures = "";
         System.out.println("Escoja un simbolo para el primer jugador:");
         System.out.println(control.printPlayersList());
-        int character = sc.nextInt();
-        System.out.println(control.updatePlayer1(character));    
+        int character = sc.nextInt();  
+        figures += control.getFigure(character);
         System.out.println("Escoja un simbolo para el segundo jugador:");
         System.out.println(control.printPlayersList());
         character = sc.nextInt();
-        System.out.println(control.updatePlayer2(character));    
+        figures += control.getFigure(character);
         System.out.println("Escoja un simbolo para el tercer jugador:");
         System.out.println(control.printPlayersList());
         character = sc.nextInt();
-        System.out.println(control.updatePlayer3(character)); 
-        control.addPlayers();   
+        figures += control.getFigure(character);
+        control.updatePlayers(figures);   
+        control.asingPosition(figures);
     }
 
-    public void printPlayersList(int counter, String list){
-        if(counter==list.length()-1){
-            return;
+    public void takeTurn(){
+        System.out.println(control.printBoard());
+        System.out.println("Jugador "+control.getCurrentPlayer().getId()+", es tu turno \n"+
+                "1. Tirar dado\n"+
+                "2. Ver escaleras y serpientes");
+        int option = sc.nextInt();
+        if(option == 1){
+            int steps = control.trowDice();
+            System.out.println("Has sacado: "+steps);
+            if(control.movePlayer(steps)){
+                takeTurn();
+            }else{
+                System.out.println("Te has pasado!");
+                takeTurn();
+            }
+
         }
-        System.out.println(counter+1+". "+list.charAt(counter));
-        printPlayersList(++counter, list);
     }
 }

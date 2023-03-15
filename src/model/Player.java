@@ -4,8 +4,26 @@ public class Player {
     private String id;
     //Establecer como base la primera casilla
     private Box current_box;
+    private Player next;
+    public Player getNext() {
+        return next;
+    }
+
+    public void setNext(Player next) {
+        this.next = next;
+    }
+
+    private Player previous;
 
     
+    public Player getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(Player previous) {
+        this.previous = previous;
+    }
+
     public Player(String id) {
         this.id = id;
         this.current_box = null;
