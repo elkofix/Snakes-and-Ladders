@@ -24,7 +24,7 @@ public class Main{
             generateTable();
             generateSnakeNLadders();
             selectPlayers();
-            System.out.println(control.printBoard());
+            takeTurn();
         }else{
             if(option==0){
                 System.out.println("Salida del programa");
@@ -72,7 +72,22 @@ public class Main{
         control.asingPosition(figures);
     }
 
-    public void generateTurns(){
-        
+    public void takeTurn(){
+        System.out.println(control.printBoard());
+        System.out.println("Jugador "+control.getCurrentPlayer().getId()+", es tu turno \n"+
+                "1. Tirar dado\n"+
+                "2. Ver escaleras y serpientes");
+        int option = sc.nextInt();
+        if(option == 1){
+            int steps = control.trowDice();
+            System.out.println("Has sacado: "+steps);
+            if(control.movePlayer(steps)){
+                takeTurn();
+            }else{
+                System.out.println("Te has pasado!");
+                takeTurn();
+            }
+
+        }
     }
 }

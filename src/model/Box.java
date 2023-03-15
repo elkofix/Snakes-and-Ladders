@@ -115,5 +115,9 @@ public class Box {
         return recalculateSpaces(--players, box);
     }
 
+    public void removePlayer(String character){
+        this.players = this.players.replaceAll(character, "");
+    }
+
     
 }

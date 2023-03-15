@@ -6,14 +6,14 @@ public class Controller {
    private LinkedList board;
    private String playerLists;
    private LinkedList copy;
-   private String turns;
+   private Player currentPlayer;
 
-   public String getTurns() {
-      return turns;
+   public Player getCurrentPlayer() {
+      return currentPlayer;
    }
 
-   public void setTurns(String turns) {
-      this.turns = turns;
+   public void setCurrentPlayer(Player currentPlayer) {
+      this.currentPlayer = currentPlayer;
    }
 
    public LinkedList getBoard() {
@@ -164,10 +164,14 @@ public class Controller {
   }
 
   public String updatePlayers(String character, int counter){
-      if(character.length()==counter+1){
+      if(counter==character.length()){
          return "Se agregaron los jugadores";
       }
       Player player = new Player(character.charAt(counter)+"");
+      System.out.println(player.getId());
+      if(counter == 0){
+         currentPlayer = player;
+     }
       player.setCurrent_box(board.getHead());
       players.addLast(player);
       return updatePlayers(character, ++counter);
@@ -182,4 +186,25 @@ public class Controller {
    public void asingPosition(String c){
       board.getHead().setPlayers(c);
    }
+
+   public void passTurn(){
+      this.currentPlayer=this.currentPlayer.getNext();
+    }
+
+    public  int trowDice(){
+      return   ((int)(Math.random()*6)+1);
+    }
+
+    public boolean movePlayer(int steps){
+      int nextBox = this.currentPlayer.getCurrent_box().getValue()+steps;
+      if(nextBox<=board.getSize()) {
+         this.currentPlayer.getCurrent_box().removePlayer(this.currentPlayer.getId());
+         Box box = board.search(nextBox);
+         box.addPlayers(this.currentPlayer.getId());
+         this.currentPlayer.setCurrent_box(box);
+         passTurn();
+         return true;
+      }
+      return false;
+    }
 }
