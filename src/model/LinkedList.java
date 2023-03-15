@@ -6,6 +6,10 @@ public class LinkedList {
         return head;
     }
 
+    public Box getTail() {
+        return tail;
+    }
+
     private Box tail;
     private int size;
     private int rows;
@@ -142,6 +146,45 @@ public class LinkedList {
 
         return printReverse(current.getNext(), goal, msj);
     }
+    //Activacion. Este metodo imprime el table cuando las filas son pares
+    public String printSnakes(){
+        return printSnakes(tail, "");
+    }
+
+    //Recursivo
+    private String printSnakes(Box current, String msj){
+        if(current == null ){
+            return msj;
+        }
+        if((current.getValue()+columns-1)%columns!=0){
+            msj += current.toString2();
+
+        }else{
+            msj += current.toString()+"\n";
+            if(current.getValue()!=1){
+                msj+=printReverseS(search(current.getValue()-columns), current  .getValue()-1, "");
+                return printSnakes(search(current.getValue()-columns-1), msj);
+            }
+
+        }
+
+        return printSnakes(current.getPrevious(), msj);
+    }
+
+    private String printReverseS(Box current, int goal, String msj){
+        if(current.getValue()==goal+1){
+            return msj;
+        }
+        if(current.getValue()!=goal){
+            msj += current.toString2();
+
+        }else{
+            msj += current.toString2()+"\n";
+        }
+
+        return printReverseS(current.getNext(), goal, msj);
+    }
+
 
     //Activacion. Este metodo imprime el table cuando las filas son impares
     public String printBoardOdd(){
@@ -187,6 +230,51 @@ public class LinkedList {
         }
 
         return printReverseOdd(current.getNext(), goal, msj);
+    }
+
+    public String printSnakesOdd(){
+        return printSnakesOdd(tail, "");
+    }
+
+    private String printSnakesOdd(Box current, String msj){
+        if(current == null ){
+            return msj;
+        }
+        if((current.getValue()%columns==0 && current.getValue()%2!=0)){
+            if(current.getValue()!=1){
+                msj+=printReverseOddS(search(current.getValue()-columns+1), current.getValue(), "");
+                return printSnakesOdd(search(current.getValue()-columns), msj);
+            }
+
+
+        }else{
+            if((current.getValue()+columns-1)%columns==0){
+                msj += current.toString2()+"\n";
+            }else{
+                msj += current.toString2();
+
+            }
+
+        }
+
+        return printSnakesOdd(current.getPrevious(), msj);
+    }
+
+    private String printReverseOddS(Box current, int goal, String msj){
+        if(current==null){
+            return msj;
+        }
+        if(current.getValue()>goal){
+            return msj;
+        }
+        if(current.getValue()!=goal){
+            msj += current.toString2();
+
+        }else{
+            msj += current.toString2()+"\n";
+        }
+
+        return printReverseOddS(current.getNext(), goal, msj);
     }
 
     //Eliminacion

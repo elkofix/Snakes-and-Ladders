@@ -24,7 +24,9 @@ public class Main{
             generateTable();
             generateSnakeNLadders();
             selectPlayers();
+            long startTime = System.nanoTime();
             takeTurn();
+            printScores(startTime);
         }else{
             if(option==0){
                 System.out.println("Salida del programa");
@@ -82,12 +84,34 @@ public class Main{
             int steps = control.trowDice();
             System.out.println("Has sacado: "+steps);
             if(control.movePlayer(steps)){
+                if(control.isEnd()){
+                    System.out.println(control.getCurrentPlayer().getId()+" Ha llegado a la meta");
+                    return;
+                }
+                control.passTurn();
                 takeTurn();
+
             }else{
                 System.out.println("Te has pasado!");
+                control.passTurn();
                 takeTurn();
+
             }
 
+
+        }else if(option==2){
+            System.out.println(control.printSnakes());
+            takeTurn();
         }
+    }
+
+    public void printScores(long startTime){
+        long endTime = System.nanoTime();
+        long division = (long)600000000*100;
+        int elapsedTime= ((int)((endTime-startTime)/division));
+        System.out.println(elapsedTime) ;
+        int score = (600-elapsedTime)/6;
+        control.addScore(score);
+        System.out.println(control.printScores());
     }
 }

@@ -8,6 +8,16 @@ public class Box {
     //Este atributo es la caja a la que apunta otra, por ejemplos si este fuera la casilla 2, y es una escalera, este apuntaria al 7
     private Box pointer;
     private boolean snake;
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    private String symbol;
     private String players;
     public String getPlayers() {
         return players;
@@ -51,6 +61,7 @@ public class Box {
         this.ladder = false;
         this.snake = false;
         this.players = "";
+        this.symbol = " ";
     }
 
     public int getValue() {
@@ -104,7 +115,7 @@ public class Box {
     }
 
     public String toString2(){
-        return "  ["+ snake+"]  ";
+        return "  ["+symbol+"]  ";
     }
 
     public String recalculateSpaces(int players, String box){

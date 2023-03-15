@@ -4,6 +4,7 @@ import java.lang.Math;
 public class Controller {
    private CircularLinkedList players;
    private LinkedList board;
+   private  BST scores;
    private String playerLists;
    private LinkedList copy;
    private Player currentPlayer;
@@ -30,6 +31,7 @@ public class Controller {
       this.copy = new LinkedList();
       this.playerLists = "!OX%$#+&";
       this.players = new CircularLinkedList();
+      this.scores = new BST();
    }
    //Este metodo genera el numero de las casillas pedidas
    public String generateTable(int size, int rows, int colum){
@@ -37,6 +39,15 @@ public class Controller {
       board.setSize(size);
       board.setRows(rows);
       return generateTable(size, 1);
+   }
+
+   public void addScore(int score){
+       Node scoreNew = new Node(score);
+       scores.insert(scoreNew);
+   }
+
+   public String printScores(){
+       return scores.inOrderString();
    }
 
    private String generateTable(int size, int counter){
@@ -77,10 +88,10 @@ public class Controller {
       this.copy.delete(1);
       this.copy.delete(board.getSize());
       this.copy.decreaseSize();
-      return adddSnakenLadders(snk, ladd, this.copy);
+      return adddSnakenLadders(snk, ladd, this.copy, 'A', 1);
    }
 
-   private String adddSnakenLadders(int snk, int ladd, LinkedList copy){
+   private String adddSnakenLadders(int snk, int ladd, LinkedList copy, char symbol, int number){
       if(snk==0 && ladd==0){
          return "Se han agregado las serpientes y escaleras";
       }
@@ -100,13 +111,15 @@ public class Controller {
             if(!boxStart.isSnake() && !boxEnd.isSnake() && !boxStart.isLadder() && !boxEnd.isLadder()){
                boxStart = board.search(boxStart.getValue());
                boxEnd = board.search(boxEnd.getValue());
+               boxStart.setSymbol(symbol+"");
+               boxEnd.setSymbol(symbol+"");
                boxStart.setPointer(boxEnd);
                boxStart.setSnake(true);
                boxEnd.setSnake(true);
                copy.delete(boxStart.getValue());
                copy.delete(boxEnd.getValue());
                copy.decreaseSize();
-               return adddSnakenLadders(--snk, ladd, copy);
+               return adddSnakenLadders(--snk, ladd, copy, ++symbol, number);
             }
          }
       }
@@ -125,17 +138,19 @@ public class Controller {
             if(!boxStart.isSnake() && !boxEnd.isSnake() && !boxStart.isLadder() && !boxEnd.isLadder()){
                boxStart = board.search(boxStart.getValue());
                boxEnd = board.search(boxEnd.getValue());
+               boxStart.setSymbol(number+"");
+               boxEnd.setSymbol(number+"");
                boxStart.setPointer(boxEnd);
                boxStart.setLadder(true);
                boxEnd.setLadder(true);
                copy.delete(boxStart.getValue());
                copy.delete(boxEnd.getValue());
                copy.decreaseSize();
-               return adddSnakenLadders(snk, --ladd, copy);
+               return adddSnakenLadders(snk, --ladd, copy, symbol, ++number);
             }
          }
       }
-      return adddSnakenLadders(snk, ladd, copy);
+      return adddSnakenLadders(snk, ladd, copy, symbol, number);
    }
    //Este metodo imprime el tablero dependiendo si las filas son impares o impares
    public String printBoard(){
@@ -145,6 +160,14 @@ public class Controller {
          return board.printBoardOdd();
       }
    }
+
+    public String printSnakes(){
+        if(board.getRows()%2==0){
+            return board.printSnakes();
+        }else{
+            return board.printSnakesOdd();
+        }
+    }
    //Este metodo imprime la lista de opciones de signos para usar como jugadore
    public String printPlayersList(){
       return printPlayersList(0, "");
@@ -200,11 +223,20 @@ public class Controller {
       if(nextBox<=board.getSize()) {
          this.currentPlayer.getCurrent_box().removePlayer(this.currentPlayer.getId());
          Box box = board.search(nextBox);
-         box.addPlayers(this.currentPlayer.getId());
-         this.currentPlayer.setCurrent_box(box);
-         passTurn();
+
+         if(box.getPointer()!=null){
+             box.getPointer().addPlayers(this.currentPlayer.getId());
+             this.currentPlayer.setCurrent_box(box.getPointer());
+         }else{
+             box.addPlayers(this.currentPlayer.getId());
+             this.currentPlayer.setCurrent_box(box);
+         }
          return true;
       }
       return false;
+    }
+
+    public boolean isEnd(){
+       return !board.getTail().getPlayers().equals("");
     }
 }
