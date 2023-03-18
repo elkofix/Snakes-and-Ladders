@@ -1,10 +1,12 @@
 package model;
 import java.lang.Math;
 
+import exception.NotAllowedSizeException;
+
 public class Controller {
    private CircularLinkedList players;
    private LinkedList board;
-   private  BST scores;
+   private BST scores;
    private String playerLists;
    private LinkedList copy;
    private Player currentPlayer;
@@ -50,12 +52,17 @@ public class Controller {
        return scores.inOrderString();
    }
 
+   public void resetBoard(){
+      board = new LinkedList();
+      copy = new LinkedList();
+   }
+
    private String generateTable(int size, int counter){
       if(counter >= size+1){
          return "Se ha generado el tablero";
       }
       if(size<6){
-         return "El tamaño del tablero debe ser de almenos 2*3";
+         throw new NotAllowedSizeException("El tamaño del tablero debe ser de almenos 2*3");
       }
       board.addNode(counter);
       return generateTable(size, ++counter);
@@ -82,7 +89,7 @@ public class Controller {
    //Para que asi no se desborde la memoria
    public String addSnakenLadders(int snk, int ladd){
       if(snk==0 || ladd==0){
-         return "Las escarleras y serpientes deben ser mayores a 0";
+         throw new NotAllowedSizeException("Las escarleras y serpientes deben ser mayores a 0");
       }
 
       this.copy.delete(1);

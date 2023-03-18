@@ -27,6 +27,7 @@ public class Main{
             long startTime = System.nanoTime();
             takeTurn();
             printScores(startTime);
+            startMenu();
         }else{
             if(option==0){
                 System.out.println("Salida del programa");
@@ -43,9 +44,13 @@ public class Main{
 
         System.out.println("\n Digite el numero de columnas del tablero: ");
         int cols = sc.nextInt();
-
-        System.out.println(control.generateTable(rows*cols, rows, cols));
-        control.generateTable1(rows*cols, rows, cols);
+        try{
+            System.out.println(control.generateTable(rows*cols, rows, cols));
+            control.generateTable1(rows*cols, rows, cols);
+        }catch(RuntimeException e){
+            System.out.println(e);
+            startMenu();
+        }
     }
 
     public void generateSnakeNLadders(){
@@ -86,6 +91,7 @@ public class Main{
             if(control.movePlayer(steps)){
                 if(control.isEnd()){
                     System.out.println(control.getCurrentPlayer().getId()+" Ha llegado a la meta");
+                    
                     return;
                 }
                 control.passTurn();
