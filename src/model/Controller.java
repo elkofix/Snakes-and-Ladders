@@ -2,6 +2,7 @@ package model;
 import java.lang.Math;
 
 import exception.NotAllowedSizeException;
+import exception.TooManySnakesNLaddersException;
 
 public class Controller {
    private CircularLinkedList players;
@@ -52,9 +53,11 @@ public class Controller {
        return scores.inOrderString();
    }
 
-   public void resetBoard(){
-      board = new LinkedList();
-      copy = new LinkedList();
+   public void resetGame(){
+      this.board = new LinkedList();
+      this.copy = new LinkedList();
+      this.playerLists = "!OX%$#+&";
+      this.players = new CircularLinkedList();
    }
 
    private String generateTable(int size, int counter){
@@ -90,6 +93,9 @@ public class Controller {
    public String addSnakenLadders(int snk, int ladd){
       if(snk==0 || ladd==0){
          throw new NotAllowedSizeException("Las escarleras y serpientes deben ser mayores a 0");
+      }
+      if((snk+ladd)*2 > board.getSize()){
+         throw new TooManySnakesNLaddersException("El tablero no es capaz de contener tantas serpientes y esacaleras");
       }
 
       this.copy.delete(1);
