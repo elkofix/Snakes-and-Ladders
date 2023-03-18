@@ -20,7 +20,6 @@ public class Main{
 
     public void startMenu(){
         System.out.println("\n Bienvenido al juego Escaleras y Serpientes... \n\n Seleccione una opcion: \n [1] Jugar \n [2] Salir");
-        System.out.println("Estoy pidiendo opcion");
         int option = sc.nextInt();
         if(option==1){
             generateTable();
@@ -53,11 +52,9 @@ public class Main{
 
     public void generateSnakeNLadders(){
         System.out.println("\n Digite el numero de serpientes: ");
-        System.out.println("Estoy pidienod serpientes");
         int snakes = sc.nextInt();
         
         System.out.println("\n Digite el numero de escaleras: ");
-        System.out.println("Estoy pidienod escaleras");
         int stairs = sc.nextInt();
         try{
             System.out.println(control.addSnakenLadders(snakes, stairs));
@@ -73,7 +70,6 @@ public class Main{
         String figures = "";
         System.out.println("Escoja un simbolo para el primer jugador:");
         System.out.println(control.printPlayersList());
-        System.out.println("Estoy pidiento character");
         int character = sc.nextInt();  
         figures += control.getFigure(character);
         System.out.println("Escoja un simbolo para el segundo jugador:");
