@@ -282,11 +282,11 @@ public class Controller {
       }
       return false;
     }
-
+    //verifica si algun jugado ha llegado a la meta
     public boolean isEnd(){
        return !board.getTail().getPlayers().equals("");
     }
-
+    //Imprime una lista con indices de los puntajes obtenidos
     public String printScoreList(){
       return printScoreList(1, "Lista de puntajes \n", scores.inOrderString());
     }
@@ -320,15 +320,12 @@ public class Controller {
       return board;
    }
 
-   public void setBoard(LinkedList board) {
-      this.board = board;
-   }
-
+    //Agrega un puntaje al arbol binario de busqueda
    public void addScore(int score){
       Node scoreNew = new Node(score);
       scores.insert(scoreNew);
   }
-
+    //Resetea el juego a un estado inicial exceptuando los scores, que es lo unico que se guarda entre rondas
   public void resetGame(){
      this.board = new LinkedList();
      this.copy = new LinkedList();
