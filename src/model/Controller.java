@@ -7,7 +7,12 @@ import exception.TooManySnakesNLaddersException;
 public class Controller {
    private CircularLinkedList players;
    private LinkedList board;
-   private BST scores;
+
+    public BST getScores() {
+        return scores;
+    }
+
+    private BST scores;
    private String playerLists;
    private LinkedList copy;
    private Player currentPlayer;
@@ -251,5 +256,23 @@ public class Controller {
 
     public boolean isEnd(){
        return !board.getTail().getPlayers().equals("");
+    }
+
+    public String printScoreList(){
+      return printScoreList(1, "Lista de puntajes \n", scores.inOrderString());
+    }
+
+    public String printScoreList(int counter, String msj, String scores){
+         if(scores.length()==0){
+            return msj;
+         }
+         String current;
+         int i;
+         i = scores.indexOf(",");
+         current = scores.substring(0, i);
+         scores = scores.substring(i+1, scores.length());
+         msj += counter+": "+current+"\n";
+         return printScoreList(++counter, msj, scores);
+
     }
 }

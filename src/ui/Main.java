@@ -98,7 +98,7 @@ public class Main{
                 if(control.isEnd()){
                     System.out.println(control.getCurrentPlayer().getId()+" Ha llegado a la meta");
                     control.resetGame();
-                    printScores(startTime);
+                    printScores();
                     return;
                 }
                 control.passTurn();
@@ -121,13 +121,13 @@ public class Main{
         }
     }
 
-    public void printScores(long startTime){
+    public void printScores(){
         long endTime = System.nanoTime();
         long division = (long)600000000*100;
         int elapsedTime= ((int)((endTime-startTime)/division));
         int score = (600-elapsedTime)/6;
         control.addScore(score);
-        System.out.println(control.printScores());
+        System.out.println(control.printScoreList());
         startMenu();
     }
 }
