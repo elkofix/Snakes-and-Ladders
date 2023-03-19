@@ -1,5 +1,5 @@
 package model; 
-
+//Nodo del arbol binario de busqueda
 public class Node {
 
 	private int value;
