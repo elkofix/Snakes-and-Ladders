@@ -6,7 +6,6 @@ import exception.TooManySnakesNLaddersException;
 //Clase controladora
 //Cosas por hacer: 
 //1. Testear
-//2. Arreglar error al escoger metacaracteres + y *
 public class Controller {
    //Lista circular de jugadores
    private CircularLinkedList players;
@@ -208,7 +207,7 @@ public class Controller {
 
    //Este metodo imprime la lista de caracteres disponibles para elegir como personajes por los jugadores
   public String printPlayersList(int counter, String msj){
-      if(counter==playerLists.length()-1){
+      if(counter==playerLists.length()){
           return msj;
       }
       msj+=(counter+1)+". "+this.playerLists.charAt(counter)+"\n";
@@ -234,10 +233,19 @@ public class Controller {
    }
    //Este metodo recibe la figura que escogieron pa un jugador y la borra para que no la puedan escoger mas
    public String getFigure(int pos){
+       if(pos>playerLists.length()){
+           throw new IndexOutOfBoundsException("El valor ingresado no corresponde a uno de los disponibles");
+       }
       String chars = this.playerLists.charAt(pos-1)+"";
-      this.playerLists = this.playerLists.replaceFirst(chars, "");
+      if(chars.equals("*")){
+          this.playerLists = this.playerLists.replaceFirst("\\*", "");
+      }else if(chars.equals("+")){
+           this.playerLists = this.playerLists.replaceFirst("\\+", "");
+      }else {
+          this.playerLists = this.playerLists.replaceFirst(chars, "");
+      }
 		return chars;
-	}
+      }
    //Pone a los jugadores en la caja del principio
    public void asingPosition(String c){
       board.getHead().setPlayers(c);

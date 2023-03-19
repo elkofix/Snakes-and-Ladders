@@ -1,5 +1,6 @@
 package ui;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import model.Controller;
 
@@ -27,30 +28,44 @@ public class Main{
         Main main = new Main();
         //Llamo al metodo que será el hilo principal de la ejecución de nuestro juego, el cual llamara a todos los metodos necesarios
         //de manera consecutiva para el correcto funcionamiento del juego.
-        main.startMenu();
+        try{
+            main.startMenu();
+        }catch (InputMismatchException e){
+            System.out.println("Ingreso invalido");
+            main.sc.nextLine();
+            main.startMenu();
+        }
+
     }
 
     //Es el metodo que llama a los demas metodos necesarios para poder jugar
     public void startMenu(){
+
         //Imprime el menu con las primeras dos opciones (1) Jugar y (2) Salir
         System.out.println("\n Bienvenido al juego Escaleras y Serpientes... \n\n Seleccione una opcion: \n [1] Jugar \n [2] Salir");
-        int option = sc.nextInt();
-        if(option==1){
-            //Si el usuario decide jugar llamo al primer metodo de la construccion de nuestro juego, que va a generar el tablero
-            generateTable();
-        }else if(option==2){
-            //Muestro un mensaje de salida del programa
-            System.out.println("Salida del programa");    
-            //Cierro el scanner para evitar que capte mas informacion despues de haber cerrado el juego 
-            sc.close();       
-        // Si lo ingresado por el usuario no corresponde a ninguna de las dos opciones (1) Jugar (2) Salir
-        }else{ 
-            //Imprimo un mensaje de error
-            System.out.println("Opcion invalida");
-            //Llamo a este mismo metodo recursivamente para que se vuelva a imprimir el menu
+        try{
+            int option = sc.nextInt();
+
+            if(option==1){
+                //Si el usuario decide jugar llamo al primer metodo de la construccion de nuestro juego, que va a generar el tablero
+                generateTable();
+            }else if(option==2){
+                //Muestro un mensaje de salida del programa
+                System.out.println("Salida del programa");
+                //Cierro el scanner para evitar que capte mas informacion despues de haber cerrado el juego
+                sc.close();
+            // Si lo ingresado por el usuario no corresponde a ninguna de las dos opciones (1) Jugar (2) Salir
+            }else{
+                //Imprimo un mensaje de error
+                System.out.println("Opcion invalida");
+                //Llamo a este mismo metodo recursivamente para que se vuelva a imprimir el menu
+                startMenu();
+            }
+        }catch (InputMismatchException e){
+            System.out.println("Ingreso invalido");
+            sc.nextLine();
             startMenu();
         }
-        
     }
     //Este metodo obtendra la informacion para generar el tablero
     public void generateTable(){

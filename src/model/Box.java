@@ -135,7 +135,15 @@ public class Box {
     }
 
     public void removePlayer(String character){
-        this.players = this.players.replaceAll(character, "");
+        if(character.equals("*")){
+            this.players = this.players.replaceAll("\\*", "");
+        }else if(character.equals("+")){
+            this.players = this.players.replaceAll("\\+", "");
+        }else{
+            this.players = this.players.replaceAll(character, "");
+        }
+
+
     }
 
     
