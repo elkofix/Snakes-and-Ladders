@@ -39,4 +39,14 @@ public class ControllerTest {
                 "1: 100\n";
         assertEquals(result, control.printScoreList());
     }
+
+    @Test
+    public void testPrintBoardOddRowsEvenColumns() {
+        control.generateTable(6,3, 2);
+        String expected = "  [5]      [6]    \n"+
+                          "  [4]      [3]    \n"+
+                          "  [1]      [2]    \n";
+        assertEquals(expected, control.getBoard().printBoardOdd());
+    }
+
 }

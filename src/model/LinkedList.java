@@ -195,23 +195,45 @@ public class LinkedList {
         if(current == null ){
             return msj;
         }
-        if((current.getValue()%columns==0 && current.getValue()%2!=0)){
-            if(current.getValue()!=1){
-                msj+=printReverseOdd(search(current.getValue()-columns+1), current.getValue(), "");
-                return printBoardOdd(search(current.getValue()-columns), msj);
-            }
-            
-            
-        }else{
-            if((current.getValue()+columns-1)%columns==0){
-                    msj += current.toString()+"\n"; 
-            }else{
-                msj += current.toString();
-            
-            }
-            
-        }
 
+        if(columns%2!=0) {
+            if ((current.getValue() % columns == 0 && (current.getValue() % 2) != 0)) {
+                if (current.getValue() != 1) {
+                    msj += printReverseOdd(search(current.getValue() - columns + 1), current.getValue(), "");
+                    return printBoardOdd(search(current.getValue() - columns), msj);
+                }
+
+
+            } else {
+                if ((current.getValue() + columns - 1) % columns == 0) {
+                    msj += current.toString() + "\n";
+                } else {
+                    msj += current.toString();
+
+                }
+
+            }
+        }else{
+            Double divisible = (double)current.getValue();
+            Double x = (divisible/columns);
+            Double row = Math.ceil(x);
+            if ((current.getValue() % columns == 0 && (current.getValue() % 2) == 0) && row%2!=0){
+                if (current.getValue() != 1) {
+                    msj += printReverseOdd(search(current.getValue() - columns + 1), current.getValue(), "");
+                    return printBoardOdd(search(current.getValue() - columns), msj);
+                }
+
+
+            } else {
+                if ((current.getValue() + columns - 1) % columns == 0) {
+                    msj += current.toString() + "\n";
+                } else {
+                    msj += current.toString();
+
+                }
+
+            }
+        }
         return printBoardOdd(current.getPrevious(), msj);
     }
 
@@ -240,21 +262,43 @@ public class LinkedList {
         if(current == null ){
             return msj;
         }
-        if((current.getValue()%columns==0 && current.getValue()%2!=0)){
-            if(current.getValue()!=1){
-                msj+=printReverseOddS(search(current.getValue()-columns+1), current.getValue(), "");
-                return printSnakesOdd(search(current.getValue()-columns), msj);
-            }
+        if(columns%2!=0) {
+            if((current.getValue()%columns==0 && current.getValue()%2!=0)){
+                if(current.getValue()!=1){
+                    msj+=printReverseOddS(search(current.getValue()-columns+1), current.getValue(), "");
+                    return printSnakesOdd(search(current.getValue()-columns), msj);
+                }
 
 
-        }else{
-            if((current.getValue()+columns-1)%columns==0){
-                msj += current.toString2()+"\n";
             }else{
-                msj += current.toString2();
+                if((current.getValue()+columns-1)%columns==0){
+                    msj += current.toString2()+"\n";
+                }else{
+                    msj += current.toString2();
+
+                }
 
             }
+        }else{
+            Double divisible = (double)current.getValue();
+            Double x = (divisible/columns);
+            Double row = Math.ceil(x);
+            if ((current.getValue() % columns == 0 && (current.getValue() % 2) == 0) && row%2!=0){
+                if (current.getValue() != 1) {
+                    msj += printReverseOddS(search(current.getValue() - columns + 1), current.getValue(), "");
+                    return printSnakesOdd(search(current.getValue() - columns), msj);
+                }
 
+
+            } else {
+                if ((current.getValue() + columns - 1) % columns == 0) {
+                    msj += current.toString2() + "\n";
+                } else {
+                    msj += current.toString2();
+
+                }
+
+            }
         }
 
         return printSnakesOdd(current.getPrevious(), msj);

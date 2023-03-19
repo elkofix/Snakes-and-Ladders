@@ -6,7 +6,6 @@ import exception.TooManySnakesNLaddersException;
 //Clase controladora
 //Cosas por hacer: 
 //1. Testear
-//2. Arreglar metodo de imprimir cuando es un 3*2
 public class Controller {
    //Lista circular de jugadores
    private CircularLinkedList players;
