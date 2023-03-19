@@ -6,6 +6,7 @@ import exception.TooManySnakesNLaddersException;
 //Clase controladora
 //Cosas por hacer: 
 //1. Testear
+//2. Arreglar error al escoger metacaracteres + y *
 public class Controller {
    //Lista circular de jugadores
    private CircularLinkedList players;
@@ -23,7 +24,7 @@ public class Controller {
    public Controller(){
       this.board = new LinkedList();
       this.copy = new LinkedList();
-      this.playerLists = "!OX%$#+&";
+      this.playerLists = "*!OX%$#+&";
       this.players = new CircularLinkedList();
       this.scores = new BST();
    }
@@ -323,7 +324,7 @@ public class Controller {
   public void resetGame(){
      this.board = new LinkedList();
      this.copy = new LinkedList();
-     this.playerLists = "!OX%$#+&";
+     this.playerLists = "*!OX%$#+&";
      this.players = new CircularLinkedList();
   }
 
