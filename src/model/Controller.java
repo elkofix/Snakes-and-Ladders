@@ -8,9 +8,6 @@ public class Controller {
    private CircularLinkedList players;
    private LinkedList board;
 
-    public BST getScores() {
-        return scores;
-    }
 
     private BST scores;
    private String playerLists;
@@ -275,4 +272,8 @@ public class Controller {
          return printScoreList(++counter, msj, scores);
 
     }
+    public BST getScores() {
+      return scores;
+ }
+
 }
