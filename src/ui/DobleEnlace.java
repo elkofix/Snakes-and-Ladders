@@ -6,6 +6,10 @@ public class LinkedList {
         return head;
     }
 
+    public Box getTail() {
+        return tail;
+    }
+
     private Box tail;
     private int size;
     private int rows;
@@ -128,7 +132,7 @@ public class LinkedList {
 
         return printBoard(current.getPrevious(), msj);
     }
-
+    //Este metodo imprime en orden inverso, para dar ese recorrido en forma de S
     private String printReverse(Box current, int goal, String msj){
         if(current.getValue()==goal+1){
             return msj;
@@ -142,36 +146,59 @@ public class LinkedList {
 
         return printReverse(current.getNext(), goal, msj);
     }
+    
 
-    //Activacion. Este metodo imprime el table cuando las filas son impares
+    //Activacion. Este metodo imprime el table cuando las filas son impares y cambia en funcion de que si las columnas son pares o impares
     public String printBoardOdd(){
         return printBoardOdd(tail, "");
     }
-
+    //Recursivo
     private String printBoardOdd(Box current, String msj){
         if(current == null ){
             return msj;
         }
-        if((current.getValue()%columns==0 && current.getValue()%2!=0)){
-            if(current.getValue()!=1){
-                msj+=printReverseOdd(search(current.getValue()-columns+1), current.getValue(), "");
-                return printBoardOdd(search(current.getValue()-columns), msj);
-            }
-            
-            
-        }else{
-            if((current.getValue()+columns-1)%columns==0){
-                    msj += current.toString()+"\n"; 
-            }else{
-                msj += current.toString();
-            
-            }
-            
-        }
 
+        if(columns%2!=0) {
+            if ((current.getValue() % columns == 0 && (current.getValue() % 2) != 0)) {
+                if (current.getValue() != 1) {
+                    msj += printReverseOdd(search(current.getValue() - columns + 1), current.getValue(), "");
+                    return printBoardOdd(search(current.getValue() - columns), msj);
+                }
+
+
+            } else {
+                if ((current.getValue() + columns - 1) % columns == 0) {
+                    msj += current.toString() + "\n";
+                } else {
+                    msj += current.toString();
+
+                }
+
+            }
+        }else{
+            Double divisible = (double)current.getValue();
+            Double x = (divisible/columns);
+            Double row = Math.ceil(x);
+            if ((current.getValue() % columns == 0 && (current.getValue() % 2) == 0) && row%2!=0){
+                if (current.getValue() != 1) {
+                    msj += printReverseOdd(search(current.getValue() - columns + 1), current.getValue(), "");
+                    return printBoardOdd(search(current.getValue() - columns), msj);
+                }
+
+
+            } else {
+                if ((current.getValue() + columns - 1) % columns == 0) {
+                    msj += current.toString() + "\n";
+                } else {
+                    msj += current.toString();
+
+                }
+
+            }
+        }
         return printBoardOdd(current.getPrevious(), msj);
     }
-
+    //Imprime inverso para las filas impares
     private String printReverseOdd(Box current, int goal, String msj){
         if(current==null){
             return msj;
@@ -187,6 +214,114 @@ public class LinkedList {
         }
 
         return printReverseOdd(current.getNext(), goal, msj);
+    }
+
+    //Activacion. Este metodo imprime el table cuando las filas son pares mostrando serpientes y escaleras
+    public String printSnakes(){
+        return printSnakes(tail, "");
+    }
+
+    //Recursivo
+    private String printSnakes(Box current, String msj){
+        if(current == null ){
+            return msj;
+        }
+        if((current.getValue()+columns-1)%columns!=0){
+            msj += current.toString2();
+
+        }else{
+            msj += current.toString()+"\n";
+            if(current.getValue()!=1){
+                msj+=printReverseS(search(current.getValue()-columns), current  .getValue()-1, "");
+                return printSnakes(search(current.getValue()-columns-1), msj);
+            }
+
+        }
+
+        return printSnakes(current.getPrevious(), msj);
+    }
+    //Imprime en orden inverso las serpientes  y escaleras
+    private String printReverseS(Box current, int goal, String msj){
+        if(current.getValue()==goal+1){
+            return msj;
+        }
+        if(current.getValue()!=goal){
+            msj += current.toString2();
+
+        }else{
+            msj += current.toString2()+"\n";
+        }
+
+        return printReverseS(current.getNext(), goal, msj);
+    }
+
+
+    //Imprimer serpientes y escaleras cuando filas impares
+    public String printSnakesOdd(){
+        return printSnakesOdd(tail, "");
+    }
+
+    private String printSnakesOdd(Box current, String msj){
+        if(current == null ){
+            return msj;
+        }
+        if(columns%2!=0) {
+            if((current.getValue()%columns==0 && current.getValue()%2!=0)){
+                if(current.getValue()!=1){
+                    msj+=printReverseOddS(search(current.getValue()-columns+1), current.getValue(), "");
+                    return printSnakesOdd(search(current.getValue()-columns), msj);
+                }
+
+
+            }else{
+                if((current.getValue()+columns-1)%columns==0){
+                    msj += current.toString2()+"\n";
+                }else{
+                    msj += current.toString2();
+
+                }
+
+            }
+        }else{
+            Double divisible = (double)current.getValue();
+            Double x = (divisible/columns);
+            Double row = Math.ceil(x);
+            if ((current.getValue() % columns == 0 && (current.getValue() % 2) == 0) && row%2!=0){
+                if (current.getValue() != 1) {
+                    msj += printReverseOddS(search(current.getValue() - columns + 1), current.getValue(), "");
+                    return printSnakesOdd(search(current.getValue() - columns), msj);
+                }
+
+
+            } else {
+                if ((current.getValue() + columns - 1) % columns == 0) {
+                    msj += current.toString2() + "\n";
+                } else {
+                    msj += current.toString2();
+
+                }
+
+            }
+        }
+
+        return printSnakesOdd(current.getPrevious(), msj);
+    }
+    //Imprime inverso serpientes y escaleras impares
+    private String printReverseOddS(Box current, int goal, String msj){
+        if(current==null){
+            return msj;
+        }
+        if(current.getValue()>goal){
+            return msj;
+        }
+        if(current.getValue()!=goal){
+            msj += current.toString2();
+
+        }else{
+            msj += current.toString2()+"\n";
+        }
+
+        return printReverseOddS(current.getNext(), goal, msj);
     }
 
     //Eliminacion

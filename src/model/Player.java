@@ -1,5 +1,4 @@
 package model;
-
 public class Player {
     private String id;
     //Establecer como base la primera casilla
@@ -45,4 +44,5 @@ public class Player {
     public void setId(String id) {
         this.id = id;
     }
+
 }

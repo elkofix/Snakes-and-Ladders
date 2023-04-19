@@ -1,14 +1,24 @@
 package model;
 
 public class Box {
-
+    //El numero de la caja
     private int value;
     private Box next;
     private Box previous;
-    //Este atributo es la caja a la que apunta otra, por ejemplos si este fuera la casilla 2, y es una escalera, este apuntaria al 7
+
+    //Este atributo es la caja a la que apunta otra, por ejemplos si este fuera la casilla 2, y es una escalera, este apuntaria a la 7
+    //O a un numero de una fila mayor
     private Box pointer;
+    //True si es serpiente sino false
     private boolean snake;
+    //True si es escaler sino false
+    private boolean ladder;
+    //Este es el simbolo que representa si la escalera tiene una serpiente una escalera
+    //Si tiene una escalera por ejemplo seria 1, si fuera una serpiente por ejemplo seria A
+    private String symbol;
+    //Este son los simbolos de los jugadores que se encuentran en esta casilla
     private String players;
+
     public String getPlayers() {
         return players;
     }
@@ -24,8 +34,6 @@ public class Box {
     public void setSnake(boolean snake) {
         this.snake = snake;
     }
-
-    private boolean ladder;
 
     public boolean isLadder() {
         return ladder;
@@ -51,6 +59,7 @@ public class Box {
         this.ladder = false;
         this.snake = false;
         this.players = "";
+        this.symbol = " ";
     }
 
     public int getValue() {
@@ -84,6 +93,15 @@ public class Box {
     public void setPrevious(Box previous) {
         this.previous = previous;
     }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
     //Este metodo imprime una casilla, y calcula los espacios necesarios para que contenga jugadores y no corra las demas casillas
     @Override
     public String toString(){
@@ -102,9 +120,10 @@ public class Box {
             return "  ["+ value+"]    "; 
         }
     }
-
+    //Este metodo imprime la casilla pero con el simbolo de las serpientes y escaleras,
+    //esto es para mostrar las serpientes y escaleras en el tablero
     public String toString2(){
-        return "  ["+ snake+"]  ";
+        return "  ["+symbol+"]  ";
     }
 
     public String recalculateSpaces(int players, String box){
@@ -116,7 +135,15 @@ public class Box {
     }
 
     public void removePlayer(String character){
-        this.players = this.players.replaceAll(character, "");
+        if(character.equals("*")){
+            this.players = this.players.replaceAll("\\*", "");
+        }else if(character.equals("+")){
+            this.players = this.players.replaceAll("\\+", "");
+        }else{
+            this.players = this.players.replaceAll(character, "");
+        }
+
+
     }
 
     
